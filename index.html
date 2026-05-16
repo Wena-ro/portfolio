@@ -16,120 +16,56 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 
 .page { width: 100vw; height: 100vh; display: grid; grid-template-columns: 55% 45%; position: relative; z-index: 1; }
 
-/* ── LEFT: hand + icons ── */
+/* LEFT */
 .hand-area { position: relative; overflow: visible; }
-
 .hand-img { position: absolute; bottom: 0; left: 0; width: 100%; height: 95%; object-fit: contain; object-position: bottom left; }
-
 .icons-layer { position: absolute; inset: 0; pointer-events: none; }
-
 .icon-item { position: absolute; pointer-events: all; cursor: none; display: flex; flex-direction: column; align-items: center; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 10; }
 .icon-item:hover { transform: translateY(-22px) scale(1.08); z-index: 20; }
-
 .icon-img { width: var(--size, 90px); height: var(--size, 90px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.10)); transition: filter 0.3s; }
 .icon-item:hover .icon-img { filter: drop-shadow(0 16px 28px rgba(255,45,155,0.28)); }
-
 .icon-emoji { width: var(--size, 80px); height: var(--size, 80px); display: flex; align-items: center; justify-content: center; font-size: var(--emoji-size, 58px); filter: drop-shadow(0 8px 16px rgba(0,0,0,0.10)); transition: filter 0.3s; }
 .icon-item:hover .icon-emoji { filter: drop-shadow(0 16px 28px rgba(255,45,155,0.28)); }
-
 .icon-label { font-family: 'VT323', monospace; font-size: 16px; color: #ff2d9b; background: white; border: 1.5px solid #ff2d9b; border-radius: 999px; padding: 3px 12px; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.25s ease, transform 0.25s ease; margin-top: 6px; pointer-events: none; }
 .icon-item:hover .icon-label { opacity: 1; transform: translateY(0); }
 
-/* icon positions — tweak these to align with your hand photo */
 .ic-insync { --size: 95px;  left: 26%; bottom: 38%; }
 .ic-purple { --size: 80px; --emoji-size: 56px; left: 18%; bottom: 58%; }
 .ic-moon   { --size: 80px;  left: 42%; bottom: 62%; }
 .ic-after  { --size: 90px;  left: 44%; bottom: 46%; }
 .ic-apple  { --size: 56px;  left: 45%; bottom: 30%; }
 
-/* ── RIGHT: character panel ── */
+/* RIGHT */
 .right-panel {
-  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 0 0 0 0;
-  overflow: hidden;
-}
-
-/* character image — bottom right */
-.character-img {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  height: 88%;
-  width: auto;
-  object-fit: contain;
-  object-position: bottom right;
-}
-
-/* speech bubble */
-.bubble-wrap {
-  position: absolute;
-  top: 12%;
-  left: 4%;
-  z-index: 10;
-}
-
-.bubble {
-  background: white;
-  border: 2px solid #222;
-  border-radius: 24px;
-  padding: 20px 24px;
-  max-width: 320px;
+  justify-content: center;
+  padding: 0 32px 80px 24px;
   position: relative;
-  line-height: 1.55;
 }
 
-/* bubble tail pointing right toward character */
-.bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  right: -22px;
-  width: 0; height: 0;
-  border-top: 12px solid transparent;
-  border-bottom: 0px solid transparent;
-  border-left: 22px solid #222;
-}
-.bubble::before {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  right: -18px;
-  width: 0; height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 0px solid transparent;
-  border-left: 20px solid white;
-  z-index: 1;
-}
-
-.bubble-greeting {
+.greeting {
   font-family: 'VT323', monospace;
-  font-size: 28px;
+  font-size: clamp(42px, 5vw, 68px);
   color: #ff2d9b;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
 }
 
-.bubble-text {
-  font-size: 13px;
-  color: #444;
-  line-height: 1.6;
+.sub {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.7;
+  max-width: 240px;
+  margin-bottom: 32px;
 }
 
-.bubble-text em { font-style: italic; text-decoration: underline; }
-
-/* nav links — overlaid bottom left of right panel */
 .nav-links {
-  position: absolute;
-  bottom: 48px;
-  left: 24px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  z-index: 10;
+  margin-bottom: 0;
 }
 
 .nav-link { font-family: 'VT323', monospace; font-size: 22px; color: #222; text-decoration: none; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; transition: color 0.2s, gap 0.2s; cursor: none; }
@@ -137,12 +73,29 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 .nav-link::before { content: '>'; color: #ff2d9b; opacity: 0; transition: opacity 0.2s; }
 .nav-link:hover::before { opacity: 1; }
 
-/* contact — bottom right */
-.contact { position: absolute; bottom: 32px; right: 24px; text-align: right; font-size: 12px; color: #999; line-height: 1.8; z-index: 10; }
+/* character — small, bottom right corner */
+.character-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 52%;
+  width: auto;
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+.contact {
+  position: absolute;
+  bottom: 32px;
+  left: 24px;
+  font-size: 12px;
+  color: #999;
+  line-height: 1.8;
+}
 .contact a { color: #999; text-decoration: none; }
 .contact a:hover { color: #ff2d9b; }
 
-.hint { position: absolute; bottom: 20px; left: 24px; font-family: 'VT323', monospace; font-size: 14px; color: #ddd; letter-spacing: 1px; z-index: 10; }
+.hint { position: fixed; bottom: 20px; left: 24px; font-family: 'VT323', monospace; font-size: 14px; color: #ddd; letter-spacing: 1px; z-index: 5; }
 </style>
 </head>
 <body>
@@ -186,40 +139,25 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 
   <!-- RIGHT -->
   <div class="right-panel">
+    <div class="greeting">Hi, I'm Rowena!</div>
+    <p class="sub">Designer & creative thinker.<br>Hover the little friends to explore my work ✨</p>
 
-    <!-- speech bubble -->
-    <div class="bubble-wrap">
-      <div class="bubble">
-        <div class="bubble-greeting">Hi, I'm Rowena!</div>
-        <div class="bubble-text">
-          Hi, welcome to Rowena's world.<br>
-          She is a designer & artist.<br>
-          Based in LA / Shanghai.<br><br>
-          By the way, I'm Jiang.<br>
-          One of the characters she drew.<br>
-          Hover the little friends to explore her work ✨
-        </div>
-      </div>
-    </div>
-
-    <!-- character -->
-    <img class="character-img" src="./5.png" alt="character" onerror="this.style.display='none'">
-
-    <!-- nav -->
     <div class="nav-links">
       <a href="about.html" class="nav-link">About</a>
       <a href="work.html" class="nav-link">Work</a>
       <a href="resume.pdf" class="nav-link">Resume</a>
     </div>
 
-    <!-- contact -->
+    <!-- small character bottom right -->
+    <img class="character-img" src="./5.png" alt="character" onerror="this.style.display='none'">
+
     <div class="contact">
       Contact Me:<br>
       <a href="mailto:rowenach@usc.edu">rowenach@usc.edu</a><br>
       +1 626 662 9366
     </div>
-
   </div>
+
 </div>
 
 <div class="hint">← hover the icons</div>
