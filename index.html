@@ -26,16 +26,12 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 .icon-label { font-family: 'VT323', monospace; font-size: 16px; color: #ff2d9b; background: white; border: 1.5px solid #ff2d9b; border-radius: 999px; padding: 3px 12px; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.25s ease, transform 0.25s ease; margin-top: 6px; pointer-events: none; }
 .icon-item:hover .icon-label { opacity: 1; transform: translateY(0); }
 
-/* 白色生物 Insync — 手心中央 */
-.ic-insync { --size: 200px; left: 24%; bottom: 32%; }
-/* 紫色生物 — 左上 */
-.ic-purple { --size: 150px; --emoji-size: 110px; left: 28%; bottom: 58%; }
-/* 土星 — 右上 */
-.ic-moon   { --size: 130px; left: 46%; bottom: 60%; }
-/* 粉色blob — 右中 */
-.ic-after  { --size: 170px; left: 44%; bottom: 38%; }
-/* 苹果 — 右下 */
-.ic-apple  { --size: 100px; left: 48%; bottom: 20%; }
+/* 往右移：left 值全部+15% */
+.ic-insync { --size: 200px; left: 38%; bottom: 32%; }
+.ic-purple { --size: 150px; --emoji-size: 110px; left: 32%; bottom: 56%; }
+.ic-moon   { --size: 130px; left: 58%; bottom: 58%; }
+.ic-after  { --size: 170px; left: 56%; bottom: 36%; }
+.ic-apple  { --size: 100px; left: 58%; bottom: 18%; }
 
 /* RIGHT */
 .right-panel { display: flex; flex-direction: column; justify-content: center; padding: 0 32px 80px 24px; position: relative; }
