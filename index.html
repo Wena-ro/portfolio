@@ -8,12 +8,9 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: #fff; min-height: 100vh; overflow: hidden; cursor: none; }
-
 .cursor { width: 10px; height: 10px; background: #ff2d9b; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: multiply; }
 .cursor.hovering { width: 32px; height: 32px; background: #ff2d9b44; border: 2px solid #ff2d9b; }
-
 body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(#f0f0f0 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
-
 .page { width: 100vw; height: 100vh; display: grid; grid-template-columns: 55% 45%; position: relative; z-index: 1; }
 
 /* LEFT */
@@ -29,16 +26,16 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 .icon-label { font-family: 'VT323', monospace; font-size: 16px; color: #ff2d9b; background: white; border: 1.5px solid #ff2d9b; border-radius: 999px; padding: 3px 12px; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.25s ease, transform 0.25s ease; margin-top: 6px; pointer-events: none; }
 .icon-item:hover .icon-label { opacity: 1; transform: translateY(0); }
 
-/* 白色生物 Insync — 手心中央，大 */
-.ic-insync { --size: 150px; left: 18%; bottom: 35%; }
-/* 紫色生物 — 左上，中等 */
-.ic-purple { --size: 120px; --emoji-size: 90px; left: 22%; bottom: 58%; }
+/* 白色生物 Insync — 手心中央 */
+.ic-insync { --size: 200px; left: 24%; bottom: 32%; }
+/* 紫色生物 — 左上 */
+.ic-purple { --size: 150px; --emoji-size: 110px; left: 28%; bottom: 58%; }
 /* 土星 — 右上 */
-.ic-moon   { --size: 100px; left: 40%; bottom: 62%; }
+.ic-moon   { --size: 130px; left: 46%; bottom: 60%; }
 /* 粉色blob — 右中 */
-.ic-after  { --size: 130px; left: 38%; bottom: 42%; }
-/* 苹果 — 右下，手指前端 */
-.ic-apple  { --size: 80px;  left: 42%; bottom: 24%; }
+.ic-after  { --size: 170px; left: 44%; bottom: 38%; }
+/* 苹果 — 右下 */
+.ic-apple  { --size: 100px; left: 48%; bottom: 20%; }
 
 /* RIGHT */
 .right-panel { display: flex; flex-direction: column; justify-content: center; padding: 0 32px 80px 24px; position: relative; }
@@ -49,58 +46,41 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 .nav-link:hover { color: #ff2d9b; gap: 14px; }
 .nav-link::before { content: '>'; color: #ff2d9b; opacity: 0; transition: opacity 0.2s; }
 .nav-link:hover::before { opacity: 1; }
-
 .character-img { position: absolute; bottom: 0; right: 0; height: 52%; width: auto; object-fit: contain; object-position: bottom right; }
-
 .contact { position: absolute; bottom: 32px; left: 24px; font-size: 12px; color: #999; line-height: 1.8; }
 .contact a { color: #999; text-decoration: none; }
 .contact a:hover { color: #ff2d9b; }
-
 .hint { position: fixed; bottom: 20px; left: 24px; font-family: 'VT323', monospace; font-size: 14px; color: #ddd; letter-spacing: 1px; z-index: 5; }
 </style>
 </head>
 <body>
-
 <div class="cursor" id="cursor"></div>
-
 <div class="page">
   <div class="hand-area">
     <img class="hand-img" src="./hand.png" alt="hand" onerror="this.style.display='none'">
     <div class="icons-layer">
-
-      <!-- 白色生物: Insync 手心中央大 -->
       <div class="icon-item ic-insync" onclick="goTo('insync.html')">
         <img class="icon-img" src="./4.png" alt="Insync">
         <div class="icon-label">Insync</div>
       </div>
-
-      <!-- 紫色生物: Coming Soon 左上 -->
       <div class="icon-item ic-purple" onclick="goTo('#')">
         <div class="icon-emoji">🦇</div>
         <div class="icon-label">Coming Soon</div>
       </div>
-
-      <!-- 土星: What the Moon Brings 右上 -->
       <div class="icon-item ic-moon" onclick="goTo('moon.html')">
         <img class="icon-img" src="./1.png" alt="What the Moon Brings">
         <div class="icon-label">What the Moon Brings</div>
       </div>
-
-      <!-- 粉色blob: Aftertaste 右中 -->
       <div class="icon-item ic-after" onclick="goTo('aftertaste.html')">
         <img class="icon-img" src="./2.png" alt="Aftertaste">
         <div class="icon-label">Aftertaste</div>
       </div>
-
-      <!-- 苹果: Everything about Apple 右下 -->
       <div class="icon-item ic-apple" onclick="goTo('apple.html')">
         <img class="icon-img" src="./3.png" alt="Everything about Apple">
         <div class="icon-label">Everything about Apple</div>
       </div>
-
     </div>
   </div>
-
   <div class="right-panel">
     <div class="greeting">Hi, I'm Rowena!</div>
     <p class="sub">Designer & creative thinker.<br>Hover the little friends to explore my work ✨</p>
@@ -117,9 +97,7 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
     </div>
   </div>
 </div>
-
 <div class="hint">← hover the icons</div>
-
 <script>
 const cursor = document.getElementById('cursor');
 document.addEventListener('mousemove', e => {
