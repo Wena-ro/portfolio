@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Name — Rowena</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: #fff; color: #222; cursor: none; }
+
+.cursor { width: 10px; height: 10px; background: #ff2d9b; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: multiply; }
+.cursor.hovering { width: 32px; height: 32px; background: #ff2d9b44; border: 2px solid #ff2d9b; }
+
+body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(#f0f0f0 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 48px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #eee;
+}
+.nav-back {
+  font-family: 'VT323', monospace;
+  font-size: 18px; color: #222;
+  text-decoration: none; cursor: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: #ff2d9b; }
+.nav-back::before { content: '←'; }
+.nav-links { display: flex; gap: 28px; }
+.nav-link { font-family: 'VT323', monospace; font-size: 18px; color: #222; text-decoration: none; cursor: none; transition: color 0.2s; letter-spacing: 0.5px; }
+.nav-link:hover { color: #ff2d9b; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 48px 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: #f7f7f5;
+  /* swap this with your cover image:
+     background: url('./your-cover.jpg') center/cover no-repeat; */
+}
+
+/* tint overlay */
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.3) 60%, transparent 100%);
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+.project-tag {
+  font-family: 'VT323', monospace;
+  font-size: 16px; letter-spacing: 2px;
+  color: #ff2d9b; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.project-tag::before { content: '✦'; }
+
+.project-title {
+  font-family: 'VT323', monospace;
+  font-size: clamp(52px, 8vw, 96px);
+  line-height: 0.95; letter-spacing: -1px;
+  color: #222; margin-bottom: 24px;
+}
+
+.project-title em { color: #ff2d9b; font-style: normal; }
+
+.project-meta {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.meta-item { font-size: 13px; color: #888; }
+.meta-item strong { display: block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #bbb; margin-bottom: 2px; }
+
+.project-desc {
+  font-size: 16px; color: #555; line-height: 1.75;
+  max-width: 560px;
+}
+
+.scroll-hint {
+  position: absolute; bottom: 24px; right: 48px;
+  font-family: 'VT323', monospace; font-size: 14px;
+  color: #ccc; letter-spacing: 1px;
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+/* SECTIONS */
+.section { padding: 80px 48px; position: relative; z-index: 1; }
+.section + .section { border-top: 1px solid #eee; }
+
+.section-label {
+  font-family: 'VT323', monospace;
+  font-size: 13px; letter-spacing: 2px;
+  color: #ff2d9b; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'VT323', monospace;
+  font-size: clamp(28px, 4vw, 44px);
+  color: #222; margin-bottom: 32px;
+  letter-spacing: -0.5px;
+}
+
+/* IMAGE GRID */
+.img-grid { display: grid; gap: 16px; }
+.img-grid.cols-1 { grid-template-columns: 1fr; }
+.img-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.img-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.img-block {
+  background: #f2f2f0;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'VT323', monospace;
+  font-size: 16px; color: #ccc; letter-spacing: 1px;
+}
+.img-block img { width: 100%; height: 100%; object-fit: cover; }
+
+/* OVERVIEW GRID */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.overview-text { font-size: 15px; color: #555; line-height: 1.8; }
+.overview-text p + p { margin-top: 16px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.tag {
+  font-family: 'VT323', monospace;
+  font-size: 15px; letter-spacing: 0.5px;
+  border: 1.5px solid #222; border-radius: 999px;
+  padding: 4px 14px; color: #222;
+  transition: all 0.15s; cursor: none;
+}
+.tag:hover { background: #ff2d9b; border-color: #ff2d9b; color: white; }
+
+/* PROCESS STEPS */
+.steps { display: flex; flex-direction: column; gap: 32px; }
+.step { display: grid; grid-template-columns: 48px 1fr; gap: 24px; align-items: start; }
+.step-num {
+  font-family: 'VT323', monospace;
+  font-size: 32px; color: #ff2d9b; line-height: 1;
+}
+.step-content h3 { font-family: 'VT323', monospace; font-size: 22px; margin-bottom: 8px; }
+.step-content p { font-size: 14px; color: #666; line-height: 1.7; }
+
+/* NEXT PROJECT */
+.next-project {
+  background: #0d0d0d; color: white;
+  padding: 80px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: none; position: relative; z-index: 1;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.next-project:hover { background: #ff2d9b; }
+.next-label { font-family: 'VT323', monospace; font-size: 13px; letter-spacing: 2px; opacity: 0.5; margin-bottom: 8px; }
+.next-title { font-family: 'VT323', monospace; font-size: clamp(28px, 4vw, 48px); line-height: 1; }
+.next-arrow { font-family: 'VT323', monospace; font-size: 48px; }
+
+/* FOOTER */
+footer {
+  background: #0d0d0d; color: rgba(255,255,255,0.3);
+  padding: 24px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-logo { font-family: 'VT323', monospace; font-size: 18px; color: white; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">Back</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="resume.pdf" class="nav-link">Resume</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <!-- 换成封面图：<div class="hero-bg" style="background: url('./cover.jpg') center/cover no-repeat"></div> -->
+
+  <div class="hero-content">
+    <div class="project-tag">UI Design · 2024</div>
+    <!-- ↑ 改成你的类型和年份 -->
+
+    <h1 class="project-title">Project<br><em>Name</em></h1>
+    <!-- ↑ 改成你的项目名 -->
+
+    <div class="project-meta">
+      <div class="meta-item"><strong>Role</strong>UI Designer</div>
+      <div class="meta-item"><strong>Duration</strong>3 months</div>
+      <div class="meta-item"><strong>Tools</strong>Figma, Illustrator</div>
+    </div>
+    <!-- ↑ 改成你的信息 -->
+
+    <p class="project-desc">
+      A short one-liner about what this project is and why it matters.
+      Keep it to 2–3 sentences max — something that makes people want to scroll.
+    </p>
+    <!-- ↑ 改成你的描述 -->
+  </div>
+
+  <div class="scroll-hint">scroll ↓</div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section">
+  <div class="section-label">Overview</div>
+  <div class="overview-grid">
+    <div>
+      <h2 class="section-title">What is this<br>project about?</h2>
+      <div class="tags">
+        <span class="tag">Brand Design</span>
+        <span class="tag">Illustration</span>
+        <span class="tag">UI/UX</span>
+        <!-- ↑ 换成你的标签 -->
+      </div>
+    </div>
+    <div class="overview-text">
+      <p>Write a paragraph about the background and context of this project. What problem were you solving? Who is the audience?</p>
+      <p>What was your approach? What made this project interesting or challenging for you?</p>
+      <!-- ↑ 填入你的项目背景 -->
+    </div>
+  </div>
+</div>
+
+<!-- MAIN IMAGES -->
+<div class="section">
+  <div class="section-label">Work</div>
+  <h2 class="section-title">Visual Showcase</h2>
+
+  <!-- 单张大图 -->
+  <div class="img-grid cols-1" style="margin-bottom: 16px;">
+    <div class="img-block">
+      <!-- <img src="./your-image.jpg" alt=""> -->
+      image placeholder 1
+    </div>
+  </div>
+
+  <!-- 两张并排 -->
+  <div class="img-grid cols-2" style="margin-bottom: 16px;">
+    <div class="img-block">image placeholder 2</div>
+    <div class="img-block">image placeholder 3</div>
+  </div>
+
+  <!-- 三张并排 -->
+  <div class="img-grid cols-3">
+    <div class="img-block">image placeholder 4</div>
+    <div class="img-block">image placeholder 5</div>
+    <div class="img-block">image placeholder 6</div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="section">
+  <div class="section-label">Process</div>
+  <h2 class="section-title">How I got there</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Research & Discovery</h3>
+        <p>Describe what you did in this phase — user interviews, competitive analysis, mood boarding, etc.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Ideation & Concept</h3>
+        <p>How did you generate ideas? Sketches, wireframes, style exploration?</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Design & Execution</h3>
+        <p>The actual making — what tools, decisions, iterations happened here?</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Outcome & Reflection</h3>
+        <p>What was the result? What did you learn? What would you do differently?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEXT PROJECT -->
+<a href="aftertaste.html" class="next-project">
+  <!-- ↑ 改成下一个项目的链接 -->
+  <div>
+    <div class="next-label">Next Project</div>
+    <div class="next-title">Aftertaste</div>
+    <!-- ↑ 改成下一个项目名 -->
+  </div>
+  <div class="next-arrow">→</div>
+</a>
+
+<footer>
+  <div class="footer-logo">Rowena.</div>
+  <div>© 2026 · rowenach@usc.edu</div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a, .tag').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+});
+</script>
+</body>
+</html>

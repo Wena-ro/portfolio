@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Rowena</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: #fff; color: #222; cursor: none; }
+
+.cursor { width: 10px; height: 10px; background: #ff2d9b; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: multiply; }
+.cursor.hovering { width: 32px; height: 32px; background: #ff2d9b44; border: 2px solid #ff2d9b; }
+
+body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(#f0f0f0 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 48px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #eee;
+}
+.nav-back { font-family: 'VT323', monospace; font-size: 18px; color: #222; text-decoration: none; cursor: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.nav-back:hover { color: #ff2d9b; }
+.nav-back::before { content: '←'; }
+.nav-links { display: flex; gap: 28px; }
+.nav-link { font-family: 'VT323', monospace; font-size: 18px; color: #222; text-decoration: none; cursor: none; transition: color 0.2s; letter-spacing: 0.5px; }
+.nav-link:hover { color: #ff2d9b; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative; z-index: 1;
+  padding-top: 80px;
+}
+
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 48px;
+  border-right: 1px solid #eee;
+}
+
+.hero-tag { font-family: 'VT323', monospace; font-size: 14px; letter-spacing: 2px; color: #ff2d9b; margin-bottom: 20px; }
+.hero-tag::before { content: '✦ '; }
+
+.hero-name {
+  font-family: 'VT323', monospace;
+  font-size: clamp(48px, 6.5vw, 88px);
+  line-height: 0.9; letter-spacing: -2px;
+  color: #222; margin-bottom: 32px;
+  white-space: nowrap;
+}
+.hero-name em { color: #ff2d9b; font-style: normal; }
+
+.hero-bio {
+  font-size: 15px; color: #555; line-height: 1.85;
+  max-width: 420px; margin-bottom: 40px;
+}
+
+.hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-link {
+  font-family: 'VT323', monospace; font-size: 17px;
+  color: #222; text-decoration: none; cursor: none;
+  border: 1.5px solid #222; border-radius: 999px;
+  padding: 6px 18px; letter-spacing: 0.5px;
+  transition: all 0.15s;
+}
+.hero-link:hover { background: #ff2d9b; border-color: #ff2d9b; color: white; }
+
+/* right side — photo placeholder */
+.hero-right {
+  position: relative;
+  background: #f7f5f2;
+  display: flex; align-items: flex-end; justify-content: center;
+  overflow: hidden;
+}
+
+.photo-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 12px;
+  font-family: 'VT323', monospace; font-size: 16px;
+  color: #ccc; letter-spacing: 1px;
+}
+/* 换成真实照片时用这个：
+.hero-right img { width: 100%; height: 100%; object-fit: cover; object-position: top; } */
+
+.hero-right-label {
+  position: absolute; bottom: 32px; right: 32px;
+  font-family: 'VT323', monospace; font-size: 13px;
+  letter-spacing: 2px; color: #bbb;
+}
+
+/* SECTION BASE */
+.section { padding: 80px 48px; position: relative; z-index: 1; border-top: 1px solid #eee; }
+.section-label { font-family: 'VT323', monospace; font-size: 13px; letter-spacing: 2px; color: #ff2d9b; text-transform: uppercase; margin-bottom: 16px; }
+.section-title { font-family: 'VT323', monospace; font-size: clamp(28px, 4vw, 44px); color: #222; margin-bottom: 40px; letter-spacing: -0.5px; }
+
+/* SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.skill-card {
+  border: 1px solid #eee; border-radius: 12px;
+  padding: 28px 24px;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: none;
+}
+.skill-card:hover { border-color: #ff2d9b; transform: translateY(-4px); }
+.skill-icon { font-size: 28px; margin-bottom: 14px; }
+.skill-title { font-family: 'VT323', monospace; font-size: 20px; margin-bottom: 10px; }
+.skill-list { font-size: 13px; color: #888; line-height: 1.9; }
+
+/* EXPERIENCE */
+.exp-list { display: flex; flex-direction: column; gap: 0; }
+.exp-item {
+  display: grid; grid-template-columns: 160px 1fr;
+  gap: 32px; padding: 32px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-year { font-family: 'VT323', monospace; font-size: 16px; color: #bbb; letter-spacing: 1px; padding-top: 3px; }
+.exp-role { font-family: 'VT323', monospace; font-size: 22px; margin-bottom: 4px; }
+.exp-place { font-size: 13px; color: #ff2d9b; margin-bottom: 10px; font-weight: 500; }
+.exp-desc { font-size: 13px; color: #888; line-height: 1.7; }
+
+/* FUN FACTS */
+.facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #eee; border: 1px solid #eee; border-radius: 12px; overflow: hidden; }
+.fact-item { background: #fff; padding: 32px 24px; text-align: center; transition: background 0.2s; cursor: none; }
+.fact-item:hover { background: #fff5fa; }
+.fact-emoji { font-size: 28px; margin-bottom: 12px; }
+.fact-text { font-size: 13px; color: #666; line-height: 1.6; }
+
+/* NOW PLAYING — fun section */
+.now-section {
+  background: #0d0d0d; color: white;
+  padding: 80px 48px;
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+}
+.now-label { font-family: 'VT323', monospace; font-size: 13px; letter-spacing: 2px; color: #ff2d9b; margin-bottom: 16px; }
+.now-title { font-family: 'VT323', monospace; font-size: clamp(32px, 5vw, 56px); line-height: 1; margin-bottom: 24px; }
+.now-title em { color: #ff2d9b; font-style: normal; }
+.now-text { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+.now-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.now-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+.now-list li::before { content: '→'; color: #ff2d9b; flex-shrink: 0; }
+
+/* CTA */
+.cta-section {
+  padding: 80px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative; z-index: 1; border-top: 1px solid #eee;
+  flex-wrap: wrap; gap: 32px;
+}
+.cta-text h2 { font-family: 'VT323', monospace; font-size: clamp(32px, 5vw, 56px); margin-bottom: 8px; }
+.cta-text p { font-size: 14px; color: #888; }
+.cta-email {
+  font-family: 'VT323', monospace; font-size: 22px;
+  color: #222; text-decoration: none; cursor: none;
+  border: 2px solid #222; border-radius: 999px;
+  padding: 12px 32px; letter-spacing: 0.5px;
+  transition: all 0.15s;
+}
+.cta-email:hover { background: #ff2d9b; border-color: #ff2d9b; color: white; }
+
+/* FOOTER */
+footer { background: #0d0d0d; color: rgba(255,255,255,0.3); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.08); }
+.footer-logo { font-family: 'VT323', monospace; font-size: 18px; color: white; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">Home</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Work</a>
+    <a href="resume.pdf" class="nav-link">Resume</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">About Me</div>
+    <h1 class="hero-name">Ro<em>we</em>na.</h1>
+    <p class="hero-bio">
+      Hi! I'm Rowena Chen, a designer and artist based in LA / Shanghai.
+      I love creating characters, visual worlds, and experiences that feel
+      alive — whether that's a game, a brand, or an illustration.<br><br>
+      <!-- ↑ 改成你自己的介绍 -->
+      Currently studying at USC and always open to creative collaborations.
+    </p>
+    <div class="hero-links">
+      <a href="mailto:rowenach@usc.edu" class="hero-link">Email</a>
+      <a href="#" class="hero-link">Instagram</a>
+      <a href="#" class="hero-link">Behance</a>
+      <a href="resume.pdf" class="hero-link">Resume ↓</a>
+      <!-- ↑ 填入你的真实链接 -->
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <!-- 换成你的照片：<img src="./your-photo.jpg" alt="Rowena"> -->
+    <div class="photo-placeholder">
+      <span>📷</span>
+      <span>your photo here</span>
+    </div>
+    <div class="hero-right-label">Rowena Chen · 2026</div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="section">
+  <div class="section-label">What I do</div>
+  <h2 class="section-title">Skills & Tools</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-title">Visual Design</div>
+      <div class="skill-list">Illustration<br>Character Design<br>Brand Identity<br>Typography</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📱</div>
+      <div class="skill-title">UI / UX</div>
+      <div class="skill-list">Figma<br>Wireframing<br>Prototyping<br>User Research</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">✏️</div>
+      <div class="skill-title">Making</div>
+      <div class="skill-list">Procreate<br>Illustrator<br>Photoshop<br>After Effects</div>
+    </div>
+    <!-- ↑ 改成你真实的技能 -->
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="section">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title">Where I've been</h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-year">2024 — now</div>
+      <div>
+        <div class="exp-role">UI / Visual Designer</div>
+        <div class="exp-place">Company or Studio Name</div>
+        <div class="exp-desc">What you did here — one or two sentences is enough.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-year">2023</div>
+      <div>
+        <div class="exp-role">Design Intern</div>
+        <div class="exp-place">Another Place</div>
+        <div class="exp-desc">What you did here — keep it short and punchy.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-year">2022 — now</div>
+      <div>
+        <div class="exp-role">BFA Game Design</div>
+        <div class="exp-place">University of Southern California</div>
+        <div class="exp-desc">Studying game design, visual art, and interactive media.</div>
+      </div>
+    </div>
+    <!-- ↑ 改成你真实的经历 -->
+  </div>
+</div>
+
+<!-- FUN FACTS -->
+<div class="section">
+  <div class="section-label">A little more</div>
+  <h2 class="section-title">Things I love</h2>
+  <div class="facts-grid">
+    <div class="fact-item">
+      <div class="fact-emoji">☕</div>
+      <div class="fact-text">Oat latte, always. Non-negotiable.</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-emoji">🎮</div>
+      <div class="fact-text">RPGs with great character design</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-emoji">🌙</div>
+      <div class="fact-text">Late night museum walks & art books</div>
+    </div>
+    <div class="fact-item">
+      <div class="fact-emoji">🐾</div>
+      <div class="fact-text">Drawing creatures that don't exist yet</div>
+    </div>
+    <!-- ↑ 改成你自己喜欢的东西 -->
+  </div>
+</div>
+
+<!-- NOW -->
+<div class="now-section">
+  <div>
+    <div class="now-label">Right now</div>
+    <h2 class="now-title">What I'm<br>up to <em>lately</em></h2>
+    <p class="now-text">A snapshot of what's keeping me busy these days.</p>
+  </div>
+  <ul class="now-list">
+    <li>Working on a new game design project at USC</li>
+    <li>Exploring character-driven narrative design</li>
+    <li>Reading: <em>The Art of Game Design</em> by Jesse Schell</li>
+    <li>Listening to: whatever's on my shuffle playlist</li>
+    <!-- ↑ 改成你现在真实在做的事 -->
+  </ul>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-text">
+    <h2>Let's make<br>something together</h2>
+    <p>Open to internships, freelance, and creative collabs ✨</p>
+  </div>
+  <a href="mailto:rowenach@usc.edu" class="cta-email">rowenach@usc.edu →</a>
+</div>
+
+<footer>
+  <div class="footer-logo">Rowena.</div>
+  <div>© 2026 · Made with ✦</div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a, .skill-card, .fact-item').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+});
+</script>
+</body>
+</html>
