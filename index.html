@@ -1,3 +1,6 @@
+Index · HTML
+Copy
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,7 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; min-height: 100vh; 
 .cursor.hovering { width: 32px; height: 32px; background: #ff2d9b44; border: 2px solid #ff2d9b; }
 body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(#f0f0f0 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
 .page { width: 100vw; height: 100vh; display: grid; grid-template-columns: 55% 45%; position: relative; z-index: 1; }
-
+ 
 /* LEFT */
 .hand-area { position: relative; overflow: visible; }
 .hand-img { position: absolute; bottom: 0; left: 0; width: 100%; height: 95%; object-fit: contain; object-position: bottom left; }
@@ -25,14 +28,14 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 .icon-item:hover .icon-emoji { filter: drop-shadow(0 16px 28px rgba(255,45,155,0.28)); }
 .icon-label { font-family: 'VT323', monospace; font-size: 16px; color: #ff2d9b; background: white; border: 1.5px solid #ff2d9b; border-radius: 999px; padding: 3px 12px; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.25s ease, transform 0.25s ease; margin-top: 6px; pointer-events: none; }
 .icon-item:hover .icon-label { opacity: 1; transform: translateY(0); }
-
+ 
 /* 往右移：left 值全部+15% */
 .ic-insync { --size: 200px; left: 38%; bottom: 32%; }
 .ic-purple { --size: 150px; --emoji-size: 110px; left: 32%; bottom: 56%; }
 .ic-moon   { --size: 130px; left: 58%; bottom: 58%; }
 .ic-after  { --size: 170px; left: 56%; bottom: 36%; }
 .ic-apple  { --size: 100px; left: 58%; bottom: 18%; }
-
+ 
 /* RIGHT */
 .right-panel { display: flex; flex-direction: column; justify-content: center; padding: 0 32px 80px 24px; position: relative; }
 .greeting { font-family: 'VT323', monospace; font-size: clamp(42px, 5vw, 68px); color: #ff2d9b; line-height: 1.1; margin-bottom: 16px; letter-spacing: 1px; }
@@ -47,10 +50,18 @@ body::before { content: ''; position: fixed; inset: 0; background-image: radial-
 .contact a { color: #999; text-decoration: none; }
 .contact a:hover { color: #ff2d9b; }
 .hint { position: fixed; bottom: 20px; left: 24px; font-family: 'VT323', monospace; font-size: 14px; color: #ddd; letter-spacing: 1px; z-index: 5; }
+.top-logo { position: fixed; top: 20px; left: 28px; z-index: 100; cursor: none; }
+.top-logo img { height: 44px; width: auto; object-fit: contain; transition: opacity 0.2s; }
+.top-logo img:hover { opacity: 0.7; }
 </style>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
+ 
+<a href="index.html" class="top-logo">
+  <img src="./icon.jpg" alt="Rowena" onerror="this.style.display='none'">
+</a>
+ 
 <div class="page">
   <div class="hand-area">
     <img class="hand-img" src="./hand.png" alt="hand" onerror="this.style.display='none'">
@@ -108,3 +119,4 @@ function goTo(url) { window.location.href = url; }
 </script>
 </body>
 </html>
+ 
